@@ -7,6 +7,7 @@ on:
       - '!**.md'
       - '!.github/**'
       - '.github/workflows/build_pull_request.yml'
+  workflow_dispatch: # Ajouter ce déclencheur pour permettre l'exécution manuelle
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
@@ -74,3 +75,4 @@ jobs:
         env:
           CI_CHUNK_NUM: ${{ matrix.chunk }}
         run: chmod +x ./gradlew && ./gradlew -p src assembleDebug
+        
