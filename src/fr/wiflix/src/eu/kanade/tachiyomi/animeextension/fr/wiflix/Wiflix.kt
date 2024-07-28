@@ -20,7 +20,7 @@ import org.jsoup.nodes.Element
 
 class Wiflix : DataLifeEngine(
     "Wiflix",
-    "https://wiflix.voto",
+    "https://wiflix-catalogue.pro",
     "fr",
 ) {
 
