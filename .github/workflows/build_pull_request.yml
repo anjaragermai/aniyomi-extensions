@@ -87,4 +87,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: APKs
-          path: '**/*.apk'
+          path: app/build/outputs/apk/debug/*.apk
+          
