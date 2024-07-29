@@ -7,6 +7,7 @@ on:
       - '!**.md'
       - '!.github/**'
       - '.github/workflows/build_pull_request.yml'
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
@@ -75,15 +76,16 @@ jobs:
           CI_CHUNK_NUM: ${{ matrix.chunk }}
         run: chmod +x ./gradlew && ./gradlew -p src assembleDebug
 
-      - name: Make output directory
-        run: mkdir -p ${{ github.workspace }}/artifacts
-
-      - name: Copy APK to output directory
-        run: cp src/build/outputs/apk/debug/*.apk ${{ github.workspace }}/artifacts/
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v2
+  archive:
+    name: Archive APKs
+    needs: build_individual
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR
+        uses: actions/checkout@v4
+      - name: Upload APKs
+        uses: actions/upload-artifact@v3
         with:
-          name: apk
-          path: ${{ github.workspace }}/artifacts/*.apk
+          name: APKs
+          path: '**/*.apk'
           
