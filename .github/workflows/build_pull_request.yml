@@ -76,6 +76,9 @@ jobs:
           CI_CHUNK_NUM: ${{ matrix.chunk }}
         run: chmod +x ./gradlew && ./gradlew -p src assembleDebug
 
+      - name: List generated files
+        run: ls -R app/build/outputs/apk/debug
+
   archive:
     name: Archive APKs
     needs: build_individual
@@ -87,5 +90,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: APKs
-          path: 'app/build/outputs/apk/debug/*.apk'
+          path: '**/*.apk'
           
